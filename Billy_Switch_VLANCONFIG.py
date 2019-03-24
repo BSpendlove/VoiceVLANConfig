@@ -2,11 +2,25 @@ from netmiko import ConnectHandler
 import os
 import textfsm
 
+def turn_on_ssh(ip, username, password, secret):
+    telnet_details = {'device_type':'cisco_ios_telnet',
+    'ip': ip,
+    'username' : username,
+    'password' : password,
+    'secret' : secret}
+
+    telnet_cmds = ['crypto key gen rsa', 'yes', '2048']
+
+    telnet_session = ConnectHandler(**telnet_details)
+    print(telnet_session.enable())
+    print(telnet_session.send_config_set(telnet_cmds))
+
 class billyConfig(object):
     def __init__(self, ip, username, password, port=22, secret=''):
         self.ip = ip
         self.username = username
         self.password = password
+        self.secret = secret
         self.port = port
 
         details = {
@@ -93,6 +107,7 @@ if __name__ == "__main__":
 
         for ip in devices:
             print("Configuring device: " + ip)
+            setup_telnet = turn_on_ssh(ip, username, password, secret)
             mgr = billyConfig(ip, username, password, 22, secret)
             mgr.onlyAllowSSH() #Only allow SSH Function
             voice_vlan = mgr.createVlan(vlan_voice,'APR_TELEPHONY') #Create Voice VLAN
