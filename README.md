@@ -13,7 +13,7 @@ You don't really need to configure anything in the python file, but can add your
 ## How to use the script
 
 It was designed with in mind to:
-1. Change VTY lines to ONLY allow SSH
+1. Change VTY lines to ONLY allow SSH (onlyAllowSSH() function, can be removed from the script)
 2. Create VLAN
 3. Apply the new vlan created as a voice vlan, on static access ports that only belond to X vlan
 
