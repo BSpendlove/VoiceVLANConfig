@@ -1,0 +1,9 @@
+Value Required INTERFACE (\S+)
+Value MODE (\S+.*)
+Value VLAN (\d+)
+Value VLAN_NAME (\w+)
+
+Start
+  ^Name:\s+${INTERFACE}
+  ^Administrative\s+Mode:\s+${MODE}
+  ^Access\s+Mode\s+VLAN:\s+${VLAN}\s+\(${VLAN_NAME}\) -> Record
