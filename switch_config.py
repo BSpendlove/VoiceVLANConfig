@@ -109,6 +109,5 @@ if __name__ == "__main__":
         for ip in devices:
             print("Configuring device: " + ip)
             mgr = voiceConfig(ip, username, password, 22, secret)
-            mgr.onlyAllowSSH() #Only allow SSH Function
             voice_vlan = mgr.createVlan(vlan_voice,'PY_VOIP') #Create Voice VLAN
             mgr.assign_voicevlan(vlan_voice, vlan_data) #Assign VLAN 80 if interface is in VLAN 130, and is in access mode
