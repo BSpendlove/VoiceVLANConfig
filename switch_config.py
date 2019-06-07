@@ -15,7 +15,7 @@ def turn_on_ssh(ip, username, password, secret):
     print(telnet_session.enable())
     print(telnet_session.send_config_set(telnet_cmds))
 
-class billyConfig(object):
+class voiceConfig(object):
     def __init__(self, ip, username, password, port=22, secret=''):
         self.ip = ip
         self.username = username
@@ -62,6 +62,7 @@ class billyConfig(object):
         output = self.textfsm_extractor('show_interface_switchport', data)
         
         ports_config = [] #New list to store our new configuration to be sent over SSH
+        print(output)
 
         for count,interface in enumerate(output):
             if(interface['mode'] == 'static access' and interface['vlan'] == accessvlan): #static access is administratively defined under the interface configuration 'switchport mode access'
@@ -107,8 +108,7 @@ if __name__ == "__main__":
 
         for ip in devices:
             print("Configuring device: " + ip)
-            setup_telnet = turn_on_ssh(ip, username, password, secret)
-            mgr = billyConfig(ip, username, password, 22, secret)
+            mgr = voiceConfig(ip, username, password, 22, secret)
             mgr.onlyAllowSSH() #Only allow SSH Function
-            voice_vlan = mgr.createVlan(vlan_voice,'APR_TELEPHONY') #Create Voice VLAN
+            voice_vlan = mgr.createVlan(vlan_voice,'PY_VOIP') #Create Voice VLAN
             mgr.assign_voicevlan(vlan_voice, vlan_data) #Assign VLAN 80 if interface is in VLAN 130, and is in access mode
